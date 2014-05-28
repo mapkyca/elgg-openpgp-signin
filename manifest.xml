@@ -17,6 +17,10 @@
 		<name>elgg-remote-friends</name>
 		<version>0.1</version>
 	</requires>
+	<requires>
+		<type>php_extension</type>
+		<name>gnupg</name>
+	</requires>
 	<suggests>
 		<type>plugin</type>
 		<name>elgg-mf2</name>
