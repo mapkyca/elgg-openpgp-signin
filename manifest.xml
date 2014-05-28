@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>Indieweb OpenPGP Signon</name>
+	<author>Marcus Povey</author>
+	<version>0.1</version>
+	<category>enhancements</category>
+	<description>OpenPGP signin support for Elgg</description>
+	<website>https://github.com/mapkyca/elgg-openpgp-signin</website>
+	<copyright>Marcus Povey 2014</copyright>
+	<license>GNU General Public License version 2</license>
+	<requires>
+		<type>elgg_release</type>
+		<version>1.8</version>
+	</requires>
+	<requires>
+		<type>plugin</type>
+		<name>elgg-remote-friends</name>
+		<version>0.1</version>
+	</requires>
+	<suggests>
+		<type>plugin</type>
+		<name>elgg-mf2</name>
+		<version>0.1</version>
+	</suggests>
+</plugin_manifest>
