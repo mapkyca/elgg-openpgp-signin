@@ -85,7 +85,7 @@ elgg_register_event_handler('init', 'system', function() {
 	if (isset($page[0])) {
 
 	    elgg_load_library('openpgp-signin');
-	    elgg_load_js('openpgp-signin');
+	    elgg_load_js('openpgpsignin');
 
 	    switch ($page[0]) {
 		
