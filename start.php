@@ -6,8 +6,6 @@
  * Open PGP signin support for Elgg (based on the one I wrote for Idno)
  * 
  * TODO: 
- *  * Header 
- *  * PGP endpoint
  *  * Save key
  *  * Signin
  * 
