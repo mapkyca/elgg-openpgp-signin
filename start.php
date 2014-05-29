@@ -25,7 +25,7 @@ elgg_register_event_handler('init', 'system', function() {
     
     // Extend header
     elgg_extend_view('page/elements/head', 'openpgp-signin/header');
-
+    
     // Signature specified on any page, grab it and save it
     if (isset($_REQUEST['signature'])) {
 	error_log("Ooo... we have a signature, saving in session for later...");
@@ -124,7 +124,7 @@ elgg_register_event_handler('init', 'system', function() {
 		    
 		    $user = get_user_by_username($page[1]);
 		    if ($user) {
-			if ($key = $user->pgp_public_key) {
+			if ($key = elgg_get_plugin_user_setting('public_key', $user->guid, 'elgg-openpgp-signin')) {
 			    header('Content-Type: text/plain');
 
 			    echo $key; exit;

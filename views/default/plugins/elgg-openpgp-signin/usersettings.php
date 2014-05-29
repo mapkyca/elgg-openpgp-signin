@@ -2,9 +2,13 @@
 $user = elgg_get_logged_in_user_entity();
 
 	    elgg_load_js('openpgpsignin');
+	    
+$public_key = elgg_get_plugin_user_setting('public_key', $user->guid, 'elgg-openpgp-signin');
+$private_key = elgg_get_plugin_user_setting('private_key', $user->guid, 'elgg-openpgp-signin');
+
 ?>
 <?php
-if (($user->pgp_public_key) && ($user->pgp_private_key)) {
+if (($public_key) && ($private_key)) {
     ?>
     <div class="row">
         <div class="span9 offset1  well">
@@ -29,14 +33,14 @@ if (($user->pgp_public_key) && ($user->pgp_private_key)) {
                     <div class="control-group">
                         <label class="control-label" for="user_token">Public Key</label>
                         <div class="controls">
-                            <textarea id="public_key" name="public_key" class="span4"><?= htmlspecialchars($user->pgp_public_key) ?></textarea>
+                            <textarea id="public_key" name="params[public_key]" class="span4"><?= htmlspecialchars($public_key) ?></textarea>
                         </div>
                     </div>
 
                     <div class="control-group">
                         <label class="control-label" for="app_token">Private Key</label>
                         <div class="controls">
-                            <textarea id="private_key" name="private_key" class="span4"><?= htmlspecialchars($user->pgp_private_key) ?></textarea>
+                            <textarea id="private_key" name="params[private_key]" class="span4"><?= htmlspecialchars($private_key) ?></textarea>
                         </div>
                     </div>
 
