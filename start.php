@@ -62,6 +62,8 @@ elgg_register_event_handler('init', 'system', function() {
 
     try {
 
+	elgg_load_library('openpgp-signin');
+	
 	// Log user in based on their signature (if there is no logged in user, and signature present in session
 	if (isset($_SESSION['_PGP_SIGNATURE']) && (!elgg_get_logged_in_user_entity())) {
 
