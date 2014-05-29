@@ -20,6 +20,9 @@ elgg_register_event_handler('init', 'system', function() {
 
     // Extend header
     elgg_extend_view('page/elements/head', 'openpgp-signin/header');
+    
+    // Provide my own user save
+    elgg_register_action('elgg-openpgp-signin/usersettings/save', dirname(__FILE__) . '/actions/usersettings/save.php');
 
     // Register friend
     elgg_register_event_handler('create', 'friend', function ($event, $type, $object) {
@@ -116,7 +119,9 @@ elgg_register_event_handler('init', 'system', function() {
 
 		case 'login' :
 
-		    $returnURL = getInput('u');
+		    $returnURL = get_input('u');
+		    
+		    gatekeeper();
 
 		    $user = elgg_get_logged_in_user_entity();
 
@@ -129,7 +134,7 @@ elgg_register_event_handler('init', 'system', function() {
 		    $gpg = new \gnupg();
 
 		    if (!$gpg->addsignkey($user->pgp_privatekey_fingerprint, ''))
-			throw new \Exception('There was a problem adding the signing key, have you set your keypair?', '');
+			throw new \Exception('There was a problem adding the signing key, have you set your keypair? '. $gpg->geterror());
 
 		    $signature = $gpg->sign($user->getUrl());
 		    if (!$signature)
