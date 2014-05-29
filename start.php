@@ -120,6 +120,24 @@ elgg_register_event_handler('init', 'system', function() {
 		    )));
 		    
 		break;
+		
+		case 'key' :
+		    set_input('username', $page[1]);
+		    
+		    $user = get_user_by_username($page[1]);
+		    if ($user) {
+			if ($key = $user->pgp_public_key) {
+			    header('Content-Type: text/plain');
+
+			    echo $key; exit;
+			}
+		    }
+		    
+		    echo "No key for {$page[1]}";
+		    http_response_code(404);
+		    
+		    exit;
+		    break;
 	    }
 	}
 
