@@ -5,10 +5,6 @@
  * 
  * Open PGP signin support for Elgg (based on the one I wrote for Idno)
  * 
- * TODO: 
- *  * Signin
- * 
- *
  * @licence GNU Public License version 2
  * @link https://github.com/mapkyca/elgg-openpgp-signin
  * @link http://www.marcus-povey.co.uk
