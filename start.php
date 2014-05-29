@@ -24,6 +24,9 @@ elgg_register_event_handler('init', 'system', function() {
     
     // Register javascript
     elgg_register_js('openpgpsignin', elgg_get_site_url() . 'mod/elgg-openpgp-signin/vendor/openpgp.min.js');
+    
+    // Extend header
+    elgg_extend_view('page/elements/head', 'openpgp-signin/header');
 
     // Signature specified on any page, grab it and save it
     if (isset($_REQUEST['signature'])) {
@@ -80,7 +83,7 @@ elgg_register_event_handler('init', 'system', function() {
     }
     
     // Register bookmark page handler
-    elgg_register_page_handler('openpgpsingin', function($page) {
+    elgg_register_page_handler('openpgpsignin', function($page) {
 
 	if (isset($page[0])) {
 
