@@ -138,7 +138,7 @@ elgg_register_event_handler('init', 'system', function() {
 		    if (!$gpg->addsignkey($user->pgp_privatekey_fingerprint, ''))
 			throw new \Exception('There was a problem adding the signing key, have you set your keypair? '. $gpg->geterror());
 
-		    $signature = $gpg->sign($user->getUrl());
+		    $signature = $gpg->sign(date('c', time()) . " \n" .$user->getUrl() . " \n" . $returnURL);
 		    if (!$signature)
 			throw new \Exception('There was a problem signing: ' . $gpg->geterror());
 
