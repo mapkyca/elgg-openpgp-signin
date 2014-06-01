@@ -15,7 +15,5 @@
     </form>
 </div>
 <script>
-    $(document).ready(function() {
 	$('#pgp-login').submit();
-    })
 </script>
