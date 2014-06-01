@@ -134,3 +134,18 @@ function is_local_url($uuid) {
 
     return false;
 }
+
+/**
+ * Retrieve the cleartext from a clear signature
+ * @param type $signature
+ * @return boolean
+ */
+function getCleartextFromSig($signature) {
+
+	if (preg_match_all("/Hash:\ [^\s]+\n\n((.*)+)/s", $signature, $matches, PREG_SET_ORDER))
+	{ 
+		$sig = $matches[0][1];
+		return substr($sig, 0 , strpos($sig, '-----BEGIN'));
+	}
+	return false;
+}

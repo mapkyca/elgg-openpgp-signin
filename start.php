@@ -97,11 +97,14 @@ elgg_register_event_handler('init', 'system', function() {
 
 		//$signature = substr($signature, strpos($signature, '-----BEGIN PGP SIGNATURE-----')); // GPG verify won't take the full sig, so only return the appropriate bit
 
-		if ($info = $gpg->verify($signature, false)) {
+		if ($info = $gpg->verify($signature, false/*, getCleartextFromSig($signature)*/)) {
 
 		    if (isset($info[0]))
-			$info = $info[0];
+			$info = $info[0]; 
 
+		    if ($info['summary']==4)
+			throw new \Exception('Sorry, the signature appears to be invalid'); // Not sure, but I think summary of 4 is an invalid signature, no docs, but seems to be from observation
+		    
 		    error_log("Signature verified as : " . print_r($info, true));
 
 		    // Get some key info
