@@ -121,3 +121,16 @@ function findPublicKey($url) {
 
     return false;
 }
+
+/**
+ * Return whether the uuid is a local address.
+ */
+function is_local_url($uuid) {
+    if (($uuid_parse = parse_url($uuid)) && ($url_parse = parse_url(elgg_get_site_url()))) {
+	if ($uuid_parse['host'] == $url_parse['host']) {
+	    return true;
+	}
+    }
+
+    return false;
+}
