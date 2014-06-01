@@ -95,7 +95,7 @@ elgg_register_event_handler('init', 'system', function() {
 
 		$gpg = new \gnupg();
 
-		$signature = substr($signature, strpos($signature, '-----BEGIN PGP SIGNATURE-----')); // GPG verify won't take the full sig, so only return the appropriate bit
+		//$signature = substr($signature, strpos($signature, '-----BEGIN PGP SIGNATURE-----')); // GPG verify won't take the full sig, so only return the appropriate bit
 
 		if ($info = $gpg->verify($signature, false)) {
 
@@ -110,9 +110,9 @@ elgg_register_event_handler('init', 'system', function() {
 		    // Get user
 		    if ($user = getUserByKeyInfo($key_info)) {
 			// Got a user, log them in!
-			error_log("{$info['fingerprint']} matches user {$user->title}");
+			error_log("{$info['fingerprint']} matches user {$user->name}");
 
-			system_message("Welcome {$user->title}!");
+			system_message("Welcome {$user->name}!");
 
 			login($user);
 		    } else
