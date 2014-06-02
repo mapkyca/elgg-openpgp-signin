@@ -89,8 +89,6 @@ elgg_register_event_handler('init', 'system', function() {
 	    if (($timestamp < $now - 5) || ($timestamp > $now + 5)) // 5 seconds grace either way
 		throw new \Exception ("Sorry, you could not be logged in because the timestamp was wrong. Check your computer's clock is correct, and ideally connect to an internet time server!");
 
-	    // TODO: Check for double logins and log both out / store timestamp for a few seconds...
-
 	    if ($user_id) {
 
 		$gpg = new \gnupg();
@@ -112,6 +110,34 @@ elgg_register_event_handler('init', 'system', function() {
 
 		    // Get user
 		    if ($user = getUserByKeyInfo($key_info)) {
+			
+			// Check nonce, make sure this isn't a replay
+			$nonce = md5($user_id.$request_url.$timestamp);
+			
+			// Pull nonces from user or create
+			$nonces = unserialize($user->ops_nonces);
+			if ((!$nonces) || (!is_array($nonces)))
+			    $nonces = [];
+			
+			// Check nonce in list, exception if exist
+			if (isset($nonces[$nonce])) throw new \Exception('Sorry, I\'ve seen this login before. Refresh your page, clear your caches, chant three times and try again...');
+			
+			// Add nonce to list, sort by timestamp, then delete old ones (5 mins)
+			$nonces[$nonce] = $timestamp;
+			
+			// Remove old nonces
+			$cutoff = time()-300; // 5minutes
+			$tmp_n = [];
+			foreach ($nonces as $n => $t) {
+			    if ($t > $cutoff)
+				$tmp_n[$n] = $t;
+			}
+			$nonces = $tmp_n;
+			    
+			$user->ops_nonces = serialize($nonces); 
+			$user->save();
+			
+			
 			// Got a user, log them in!
 			error_log("{$info['fingerprint']} matches user {$user->name}");
 
